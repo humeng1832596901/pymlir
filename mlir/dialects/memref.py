@@ -31,3 +31,6 @@ class MemrefCastOperation(DialectOp):
     src_type: mast.Type
     dst_type: mast.Type
     _syntax_ = 'memref.cast {arg.ssa_use} : {src_type.type} to {dst_type.type}'
+
+memref = Dialect('memref', ops=[m[1] for m in inspect.getmembers(
+    sys.modules[__name__], lambda obj: is_op(obj, __name__))])

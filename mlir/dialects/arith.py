@@ -22,3 +22,6 @@ class AddfOperation(BinaryOperation): _opname_ = 'arith.addf'
 
 class MulfOperation(BinaryOperation): _opname_ = 'arith.mulf'
 class MulIOperation(BinaryOperation): _opname_ = 'arith.muli'
+
+arith = Dialect('arith', ops=[m[1] for m in inspect.getmembers(
+    sys.modules[__name__], lambda obj: is_op(obj, __name__))])

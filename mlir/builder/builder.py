@@ -85,7 +85,7 @@ class IRBuilder:
         self._dialects = {
             "affine": AffineBuilder(self),
             "func": FuncBuilder(self),
-            "arith": ArithBuilder(self),
+            # "arith": ArithBuilder(self),
             "std": self,  # std dialect ops can also be globally referenced
         }
 
@@ -226,6 +226,19 @@ class IRBuilder:
                 layout = mast.StridedLayout(strided, offset)
 
             return mast.RankedMemRefType(shape, dtype, layout)
+
+    def TensorType(self,
+                   dtype: mast.Type,
+                   shape: Optional[Tuple[Optional[int], ...]],
+                   ) -> mast.TensorType:
+        """
+        Returns an instance of :class:`mlir.astnodes.UnrankedTensorType` if shape is
+        *None*, else returns a :class:`mlir.astnodes.RankedTensorType`.
+        """
+        if shape is None:
+            return mast.UnrankedTensorType(dtype)
+        else:
+            return mast.RankedTensorType(shape, dtype)
 
     def _insert_op_in_block(self,
                             op_results: List[Optional[Union[mast.SsaId, str]]],
@@ -568,11 +581,7 @@ class FuncBuilder(DialectBuilder):
         self.block = None
         self.position = 0
 
-class ArithBuilder(DialectBuilder):
-    """
-    Arith dialect ops builder.
-    .. automethod:: store
-    """
-
+    def call():
+        pass
     
 # vim: fdm=marker

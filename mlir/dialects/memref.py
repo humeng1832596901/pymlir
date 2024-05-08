@@ -8,6 +8,9 @@ import mlir.astnodes as mast
 from typing import List, Tuple, Optional, Union
 from dataclasses import dataclass
 
+Literal = Union[mast.StringLiteral, float, int, bool]
+SsaUse = Union[mast.SsaId, Literal]
+
 @dataclass
 class DimOperation(DialectOp):
     operand: mast.SsaId

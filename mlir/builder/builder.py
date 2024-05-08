@@ -83,6 +83,7 @@ class IRBuilder:
         self._dialects = {
             "affine": AffineBuilder(self),
             "func": FuncBuilder(self),
+            "arith": ArithBuilder(self),
             "std": self,  # std dialect ops can also be globally referenced
         }
 
@@ -536,5 +537,11 @@ class FuncBuilder(DialectBuilder):
         self.block = None
         self.position = 0
 
+class ArithBuilder(DialectBuilder):
+    """
+    Arith dialect ops builder.
+    .. automethod:: store
+    """
 
+    
 # vim: fdm=marker

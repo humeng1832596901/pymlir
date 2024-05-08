@@ -10,22 +10,22 @@ from typing import Optional, List, Tuple, Union
 Literal = Union[mast.StringLiteral, float, int, bool]
 SsaUse = Union[mast.SsaId, Literal]
 
-# @dataclass
-# class LinalgAdd(DialectOp):
-#     a_id: mast.SsaId
-#     b_id: mast.SsaId
-#     a_type: mast.Type
-#     b_type: mast.Type
-#     c_id: mast.SsaId
-#     c_type: mast.Type
-#     out_type: Optional[mast.Type] = None
+@dataclass
+class LinalgSoftmax(DialectOp):
+    a_id: mast.SsaId
+    b_id: mast.SsaId
+    a_type: mast.Type
+    b_type: mast.Type
+    c_id: mast.SsaId
+    c_type: mast.Type
+    out_type: Optional[mast.Type] = None
 
-#     _syntax_ = [("linalg.batch_matmul"
-#                  " ins( {a_id.ssa_id} , {b_id.ssa_id} : {a_type.type} , {b_type.type} )"
-#                  " outs( {c_id.ssa_id} : {c_type.type} )"),
-#                 ("linalg.batch_matmul"
-#                  " ins( {a_id.ssa_id} , {b_id.ssa_id} : {a_type.type} , {b_type.type} )"
-#                  " init( {c_id.ssa_id} : {c_type.type} ) -> {out_type.type}")]
+    _syntax_ = [("linalg.softmax"
+                 " ins( {a_id.ssa_id} , {b_id.ssa_id} : {a_type.type} , {b_type.type} )"
+                 " outs( {c_id.ssa_id} : {c_type.type} )"),
+                ("linalg.softmax"
+                 " ins( {a_id.ssa_id} , {b_id.ssa_id} : {a_type.type} , {b_type.type} )"
+                 " init( {c_id.ssa_id} : {c_type.type} ) -> {out_type.type}")]
 
 @dataclass
 class LinalgBatchMatmul(DialectOp):

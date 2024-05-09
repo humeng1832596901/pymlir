@@ -29,6 +29,18 @@ class CallOperation(DialectOp):
     _syntax_ = ['func.call {func.symbol_ref_id} () : {type.function_type}',
                 'func.call {func.symbol_ref_id} ( {args.ssa_use_list} ) : {argtypes.function_type}']
 
+    def dump(self, indent: int = 0) -> str:
+        output = f'func.call @{self.func.value}('
+        if self.args:
+            output += ', '.join([v.dump(indent) for v in self.args])
+        output += ')'
+        if self.type:
+            args_t = '(' + ', '.join([v.dump(indent) for v in self.type[0]]) + ')'
+            ret_t = '(' + ', '.join([v.dump(indent) for v in self.type[1]]) + ')'
+            output += ' : ' + args_t + ' -> ' + ret_t
+
+        return output
+
 @dataclass
 class ConstantOperation(DialectOp):
     value: mast.SymbolRefId

@@ -152,6 +152,18 @@ class IRBuilder:
         self._insert_op_in_block([], op)
         return op
 
+    # def function_call_direct(self, name: Optional[str] = None,
+    #                         dtype: Optional[mast.Type] = None,
+    #                         args: Optional[List[mast.SsaId]] = None,
+    #                         dtypes: Optional[List[mast.Type]] = None) -> mast.CallOperation:
+    #     if name is None:
+    #         name = self.name_gen("fn")
+        
+    #     op = func.CallOperation(mast.SymbolRefId(value=name), dtype, args, dtypes)
+
+    #     self._insert_op_in_block([], op)
+    #     return op
+
     @classmethod
     def make_block(cls, region: mast.Region, name: Optional[str] = None
                    ) -> mast.Block:
@@ -581,7 +593,12 @@ class FuncBuilder(DialectBuilder):
         self.block = None
         self.position = 0
 
-    def call():
-        pass
+    def call(self, name: Optional[str] = None, functype: Optional[mast.Type] = None,
+            args: Optional[List[mast.SsaId]] = None, ssaid_name: Optional[str] = None):
+
+        op = func.CallOperation(match=0, func=mast.SymbolRefId(value=name), type=functype, args=args)
+        self.core_builder._insert_op_in_block([ssaid_name], op)
+        self.block = None
+        self.position = 0
     
 # vim: fdm=marker

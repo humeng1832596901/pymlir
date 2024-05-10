@@ -137,7 +137,7 @@ class IRBuilder:
         self._insert_op_in_block([], op)
         return op
 
-    def function(self, name: Optional[str] = None) -> mast.Function:
+    def function(self, name: Optional[str] = None, result_types: List[mast.Type]=[]) -> mast.Function:
         """
         Inserts a :class:`mlir.astnodes.Function` with name *name* into *block*.
 
@@ -146,7 +146,7 @@ class IRBuilder:
         if name is None:
             name = self.name_gen("fn")
 
-        op = mast.Function(mast.SymbolRefId(value=name), [], [], None,
+        op = mast.Function(mast.SymbolRefId(value=name), [], result_types, None,
                            mast.Region([]))
 
         self._insert_op_in_block([], op)
@@ -585,8 +585,8 @@ class FuncBuilder(DialectBuilder):
 
     .. automethod:: ret 
     """
-    def ret(self, values: Optional[List[mast.SsaId]] = None,
-            types: Optional[List[mast.Type]] = None):
+    def ret(self, values: Optional[List[mast.SsaId]],
+            types: Optional[List[mast.Type]]):
 
         op = func.ReturnOperation(match=0, values=values, types=types)
         self.core_builder._insert_op_in_block([], op)
